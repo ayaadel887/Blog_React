@@ -1,10 +1,10 @@
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "@firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useParams } from "react-router-dom";
 import { auth, db } from "../firebaseConfig";
 import LikeArticle from "./LikeArticle";
-import Comment from './Comment';
+import Comment from "./Comment";
 
 export default function Article() {
   const { id } = useParams();
