@@ -1,6 +1,6 @@
 import { arrayRemove, arrayUnion, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { db } from "../firebaseConfig";
+import { db } from "./firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { v4 as uuidv4 } from "uuid";
 import { auth } from "./../firebaseConfig";

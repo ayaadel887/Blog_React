@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./../firebaseConfig";
+import { auth } from "./firebaseConfig";
 import { signOut } from "firebase/auth";
 
 export default function Navbar() {
