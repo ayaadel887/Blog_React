@@ -1,6 +1,6 @@
 import { deleteDoc, doc } from "firebase/firestore";
 import React from "react";
-import { db, storage } from "./firebaseConfig";
+import { db, storage } from "./../firebaseConfig";
 import { toast } from "react-toastify";
 import { deleteObject, ref } from "firebase/storage";
 
