@@ -2,7 +2,7 @@ import { arrayRemove, arrayUnion, doc, onSnapshot, updateDoc } from "firebase/fi
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { v4 as uuidv4 } from "uuid";
-import { auth,db } from "./../firebaseConfig";
+import { auth,db } from "../firebaseConfig";
 
 export default function Comment({ id }) {
   const [comment, setComment] = useState("");
