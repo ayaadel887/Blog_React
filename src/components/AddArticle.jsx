@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Timestamp, collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage, db, auth } from "./../firebaseConfig";
+import { storage, db, auth } from "../firebaseConfig";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
@@ -63,10 +63,10 @@ export default function AddArticle() {
             description: formData.description,
             imageUrl: url,
             createdAt: Timestamp.now().toDate(),
-            createdBy:user.displayName,
-            userId:user.uid,
-            likes:[],
-            comments:[]
+            createdBy: user.displayName,
+            userId: user.uid,
+            likes: [],
+            comments: [],
           })
             .then(() => {
               toast("Article added successfully", { type: "success" });
