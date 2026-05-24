@@ -5,6 +5,7 @@ import { useParams, Link } from "react-router-dom";
 import { auth, db } from "../firebaseConfig";
 import LikeArticle from "./LikeArticle";
 import Comment from "./Comment";
+import ImageLoader from "./ImageLoader";
 
 export default function Article() {
   const { id } = useParams();
@@ -111,11 +112,12 @@ export default function Article() {
               className="w-100 overflow-hidden shadow-sm"
               style={{ borderRadius: "var(--radius-md)", maxHeight: "400px" }}
             >
-              <img
+              <ImageLoader
                 src={article.imageUrl}
                 alt={article.title}
-                className="img-fluid w-100 h-100"
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                className="img-fluid w-100"
+                style={{ objectFit: "cover", width: "100%", height: "100%", display: "block" }}
+                containerStyle={{ width: "100%", height: "100%" }}
               />
             </div>
           )}

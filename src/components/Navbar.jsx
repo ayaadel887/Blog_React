@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebaseConfig";
 import { signOut } from "firebase/auth";
+import ImageLoader from "./ImageLoader";
 
 export default function Navbar() {
   const [user] = useAuthState(auth);
+  const [showDropdown, setShowDropdown] = useState(false);
   const location = useLocation();
 
   // Extract initials if user displayName is not set
@@ -29,20 +31,32 @@ export default function Navbar() {
     <div className="navbar-custom fixed-top">
       <div className="navbar-container">
         {/* Left section: Logo & Search */}
-        <div className="d-flex align-items-center gap-2 flex-grow-1 flex-md-grow-0" style={{ maxWidth: "450px" }}>
-          {/* Custom Brand Logo */}
-          <Link to="/" className="text-decoration-none d-flex align-items-center">
+        <div
+          className="d-flex align-items-center gap-3 flex-grow-1 flex-md-grow-0"
+          style={{ maxWidth: "450px" }}
+        >
+          {/* Custom Brand Logo - React Icon */}
+          <Link
+            to="/"
+            className="text-decoration-none d-flex align-items-center gap-2"
+            style={{ whiteSpace: "nowrap" }}
+          >
             <span
-              className="d-flex align-items-center justify-content-center fw-bold text-white rounded bg-primary"
+              className="d-flex align-items-center justify-content-center fw-bold text-white rounded"
               style={{
-                width: "34px",
-                height: "34px",
-                fontSize: "20px",
-                fontFamily: "var(--font-heading)",
-                letterSpacing: "-1px",
+                width: "40px",
+                height: "40px",
+                fontSize: "24px",
+                background: "linear-gradient(135deg, #61dafb 0%, #0ea5e9 100%)",
               }}
             >
-              in
+              <i className="fa fa-react"></i>
+            </span>
+            <span
+              className="fw-bold text-primary d-none d-sm-inline"
+              style={{ fontSize: "18px", letterSpacing: "-0.5px" }}
+            >
+              Reactblog
             </span>
           </Link>
 
@@ -67,48 +81,32 @@ export default function Navbar() {
             <span className="d-none d-md-inline">Home</span>
           </Link>
 
-          <a className="nav-link-custom" href="#network">
-            <i className="fa fa-users"></i>
-            <span className="d-none d-md-inline">My Network</span>
-          </a>
-
-          <a className="nav-link-custom" href="#jobs">
-            <i className="fa fa-briefcase"></i>
-            <span className="d-none d-md-inline">Jobs</span>
-          </a>
-
-          <a className="nav-link-custom" href="#messaging">
-            <i className="fa fa-comments"></i>
-            <span className="d-none d-md-inline">Messaging</span>
-          </a>
-
-          <a className="nav-link-custom position-relative" href="#notifications">
-            <i className="fa fa-bell"></i>
-            <span className="d-none d-md-inline">Notifications</span>
-            <span
-              className="position-absolute top-1 translate-middle badge rounded-pill bg-danger"
-              style={{ fontSize: "8px", left: "60%" }}
-            >
-              1
-            </span>
-          </a>
-
           {/* Dropdown Menu or Sign In */}
           {user ? (
-            <div className="dropdown ms-2 ms-md-3">
+            <div
+              className="dropdown ms-2 ms-md-3"
+              style={{ position: "relative" }}
+            >
               <div
                 className="d-flex flex-column align-items-center nav-link-custom p-0"
-                id="profileDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
                 style={{ cursor: "pointer" }}
+                onClick={() => setShowDropdown(!showDropdown)}
               >
                 {user.photoURL ? (
-                  <img
+                  <ImageLoader
                     src={user.photoURL}
                     alt="Me"
                     className="rounded-circle border"
-                    style={{ width: "24px", height: "24px", objectFit: "cover" }}
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      objectFit: "cover",
+                    }}
+                    containerStyle={{
+                      width: "24px",
+                      height: "24px",
+                      borderRadius: "50%",
+                    }}
                   />
                 ) : (
                   <div
@@ -123,53 +121,73 @@ export default function Navbar() {
                 </span>
               </div>
 
-              <ul
-                className="dropdown-menu dropdown-menu-end shadow border mt-2"
-                aria-labelledby="profileDropdown"
-                style={{ borderRadius: "var(--radius-md)" }}
-              >
-                <li className="px-3 py-2 border-bottom">
-                  <div className="fw-bold text-dark text-truncate" style={{ maxWidth: "160px" }}>
-                    {user.displayName || user.email}
-                  </div>
-                  <div className="text-muted small text-truncate" style={{ maxWidth: "160px" }}>
-                    {user.email}
-                  </div>
-                </li>
-                <li>
-                  <Link className="dropdown-item py-2" to="/">
-                    <i className="fa fa-user me-2 text-secondary"></i> View Profile
-                  </Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider my-1" />
-                </li>
-                <li>
-                  <button
-                    className="dropdown-item py-2 text-danger fw-semibold"
-                    onClick={() => signOut(auth)}
-                  >
-                    <i className="fa fa-sign-out me-2"></i> Logout
-                  </button>
-                </li>
-              </ul>
+              {showDropdown && (
+                <ul
+                  className="dropdown-menu dropdown-menu-end shadow border mt-2 show"
+                  style={{
+                    position: "absolute",
+                    top: "100%",
+                    right: 0,
+                    zIndex: 1000,
+                    borderRadius: "var(--radius-md)",
+                    minWidth: "200px",
+                  }}
+                >
+                  <li className="px-3 py-2 border-bottom">
+                    <div
+                      className="fw-bold text-dark text-truncate"
+                      style={{ maxWidth: "160px" }}
+                    >
+                      {user.displayName || user.email}
+                    </div>
+                    <div
+                      className="text-muted small text-truncate"
+                      style={{ maxWidth: "160px" }}
+                    >
+                      {user.email}
+                    </div>
+                  </li>
+                  <li>
+                    <Link
+                      className="dropdown-item py-2"
+                      to="/"
+                      onClick={() => setShowDropdown(false)}
+                    >
+                      <i className="fa fa-user me-2 text-secondary"></i> View
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider my-1" />
+                  </li>
+                  <li>
+                    <button
+                      className="dropdown-item py-2 text-danger fw-semibold"
+                      onClick={() => {
+                        setShowDropdown(false);
+                        signOut(auth);
+                      }}
+                      style={{
+                        border: "none",
+                        background: "none",
+                        width: "100%",
+                        textAlign: "left",
+                      }}
+                    >
+                      <i className="fa fa-sign-out me-2"></i> Logout
+                    </button>
+                  </li>
+                </ul>
+              )}
             </div>
           ) : (
-            <Link className="btn btn-premium btn-premium-primary ms-2" to="/signin">
+            <Link
+              className="btn btn-premium btn-premium-primary ms-2"
+              to="/signin"
+            >
               Sign In
             </Link>
           )}
-
-          {/* Business Link (Matches Screenshot) */}
-          <div className="d-none d-lg-flex align-items-center border-start ps-3 ms-2 gap-2">
-            <a href="#business" className="nav-link-custom">
-              <i className="fa fa-th"></i>
-              <span>For Business <i className="fa fa-caret-down"></i></span>
-            </a>
-            <a href="#premium" className="text-decoration-none fw-bold" style={{ fontSize: "12px", color: "#b89535" }}>
-              Try Premium for £0
-            </a>
-          </div>
         </div>
       </div>
     </div>

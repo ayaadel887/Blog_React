@@ -5,6 +5,7 @@ import DeleteArticle from "./DeleteArticle";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LikeArticle from "./LikeArticle";
 import { Link, useNavigate } from "react-router-dom";
+import ImageLoader from "./ImageLoader";
 
 export default function Articles() {
   const [articles, setArticles] = useState([]);
@@ -128,10 +129,12 @@ export default function Articles() {
                 {imageUrl && (
                   <div className="post-image-container">
                     <Link to={`/article/${id}`} style={{ width: "100%" }}>
-                      <img
+                      <ImageLoader
                         src={imageUrl}
                         alt={title}
                         className="post-image img-fluid"
+                        style={{ width: "100%", display: "block" }}
+                        containerStyle={{ width: "100%" }}
                       />
                     </Link>
                   </div>
