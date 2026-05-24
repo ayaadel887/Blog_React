@@ -1,5 +1,8 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "build",
-  "nodeVersion": "24.x"
+  "nodeVersion": "24.x",
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
